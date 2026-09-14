@@ -1,36 +1,46 @@
-# PJunix
+# PJunix — Cybersecurity Portfolio & Research Site
 
-Personal cybersecurity portfolio and research notebook. It is a small static site for sharing lab work, writeups, and projects as they are ready to publish.
+A lightweight, static GitHub Pages site for documenting security learning, controlled labs, and research notes. It uses semantic HTML, modern CSS, and a small vanilla JavaScript file—no build step or runtime dependencies.
 
-There is no framework or build step: the site is ordinary HTML, CSS, and a little JavaScript. That keeps it easy to edit and works well with GitHub Pages.
+## Structure
 
-## Where things live
+```text
+index.html              Home
+about.html              Learning approach and focus
+writeups.html           Top-level research index
+projects.html           Labs and projects
+contact.html            Profile/contact placeholders
+writeups/index.html     Directory-form writeup index
+assets/css/style.css    Shared responsive theme
+assets/js/main.js       Accessible mobile navigation
+```
 
-- `index.html` — home page
-- `about.html`, `projects.html`, `contact.html` — main pages
-- `writeups.html` — writeup list
-- `writeups/` — future writeup pages
-- `assets/css/style.css` — the shared look and layout
-- `assets/js/main.js` — mobile menu behavior
+## Local testing
 
-## Editing the site
-
-Most content changes are just edits to the matching HTML page. Project cards live in `projects.html`; writeup cards live in `writeups.html`; public profile links live in `contact.html`.
-
-The colors and typography are collected at the top of `assets/css/style.css`. Change the variables there instead of hunting through every page.
-
-To add a writeup, add a new file in `writeups/` (for example, `writeups/linux-enumeration.html`), copy the page header and footer from `writeups/index.html`, then add a link to it from `writeups.html`. Files inside `writeups/` need `../assets/...` paths for shared CSS and JavaScript.
-
-## Previewing locally
-
-Opening `index.html` in a browser works. For a closer match to GitHub Pages, run this from the repository folder:
+Open `index.html` directly in a browser, or serve the repository with a simple local server:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then visit `http://localhost:8000`.
+Then visit `http://localhost:8000`. Check desktop and mobile widths, page navigation, keyboard focus, and the mobile menu.
 
-## Publishing
+## Adding a writeup
 
-GitHub Pages serves this repository directly; no build command is needed. In the repository's **Settings → Pages**, deploy from the `main` branch and the `/ (root)` folder. The public site is expected at `https://pjunix.github.io`.
+1. Add an HTML article in `writeups/`, such as `writeups/sql-injection-basics.html`.
+2. Use `../assets/css/style.css` and `../assets/js/main.js` from an article inside that directory.
+3. Copy the shared header/footer structure and adjust links using `../` paths.
+4. Add a card to `writeups.html` and `writeups/index.html` only when the article is ready to publish.
+5. Keep content scoped to authorized, educational research and avoid unsupported claims.
+
+## Updating projects and contact links
+
+Edit the project articles in `projects.html`. Replace the clearly marked LinkedIn and email placeholders in `contact.html` only with details intended for public release. The GitHub link is `https://github.com/PJunix`.
+
+## Theme
+
+Theme values live at the top of `assets/css/style.css` as CSS custom properties. Adjust colors, typography, or content width there to preserve consistent visual language across all pages.
+
+## GitHub Pages deployment
+
+Because this is the `PJunix.github.io` repository, GitHub Pages can publish from the repository root on the default publishing branch. In GitHub, open **Settings → Pages**, choose **Deploy from a branch**, and select the appropriate branch and `/ (root)` folder if Pages is not already enabled. No build command is required. Relative internal paths keep the site compatible with direct file opening and GitHub Pages.
