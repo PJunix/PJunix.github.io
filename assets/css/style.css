@@ -557,3 +557,67 @@ h3 {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* HTB machine cards */
+
+.machine-grid {
+  align-items: stretch;
+}
+
+.machine-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.machine-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  margin: -0.25rem -0.25rem 1.25rem;
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--border);
+}
+
+.machine-logo img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  display: block;
+}
+
+.machine-card h3 {
+  margin-top: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.machine-status {
+  margin: 0 0 1rem;
+  color: var(--accent-strong);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.machine-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: auto;
+}
+
+.machine-actions .button {
+  flex: 1 1 150px;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .machine-actions {
+    flex-direction: column;
+  }
+
+  .machine-actions .button {
+    width: 100%;
+  }
+}
