@@ -1,19 +1,279 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PJunix — Cybersecurity Researcher</title><meta name="description" content="PJunix documents hands-on learning in web security, penetration testing, Linux, and security research.">
-  <meta property="og:title" content="PJunix — Cybersecurity Researcher"><meta property="og:description" content="A security research notebook for web testing, Linux, labs, and technical writeups."><meta property="og:type" content="website">
-  <link rel="stylesheet" href="assets/css/style.css"><script src="assets/js/main.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PJunix — Cybersecurity Researcher</title>
+  <meta name="description" content="PJunix documents hands-on cybersecurity practice across web security, penetration testing, Linux, security labs, and technical writeups.">
+
+  <meta property="og:title" content="PJunix — Cybersecurity Researcher">
+  <meta property="og:description" content="A cybersecurity portfolio covering web security, penetration testing, Linux, security labs, and technical writeups.">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
 </head>
+
 <body>
+
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><div class="container header-inner"><a class="brand" href="index.html">PJunix</a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">Menu</button><nav class="site-nav" id="primary-navigation" aria-label="Primary navigation"><ul><li><a href="index.html" aria-current="page">Home</a></li><li><a href="about.html">About</a></li><li><a href="writeups.html">Writeups</a></li><li><a href="projects.html">Projects</a></li><li><a href="contact.html">Contact</a></li></ul></nav></div></header>
+
+<header class="site-header">
+  <div class="container header-inner">
+
+    <a class="brand" href="index.html">PJunix</a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-navigation">
+      Menu
+    </button>
+
+    <nav class="site-nav" id="primary-navigation" aria-label="Primary navigation">
+      <ul>
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="writeups.html">Writeups</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
+
 <main id="main">
-<section class="hero"><div class="container reveal"><p class="eyebrow">Security researcher</p><h1>I break things to understand<br>how they work.</h1><p class="hero-copy">Web security, penetration testing, Linux and security research. I document what I learn, build, and break.</p><div class="hero-actions"><a class="button" href="writeups.html">View writeups</a><a class="button button--secondary" href="projects.html">Explore projects</a></div><p class="terminal">~/research &gt; always learning_</p></div></section>
-<section class="section"><div class="container split"><div><p class="eyebrow">Approach</p><h2>Learning by testing, observing, and documenting.</h2></div><div class="prose"><p>PJunix is a growing security research practice focused on practical testing and clear technical notes. The work starts with vulnerable labs and machines, moves through manual web application testing, and follows evidence into Linux enumeration and privilege escalation.</p><p>Rather than treating a tool output as an answer, each experiment is an opportunity to understand behavior, validate assumptions, and record a repeatable process.</p></div></div></section>
-<section class="section section--surface"><div class="container"><div class="section-heading"><div><p class="eyebrow">Selected notes</p><h2>Featured work</h2></div><p>Explorations in web behavior, deliberately vulnerable environments, and methodical testing.</p></div><div class="grid card-grid"><article class="card"><p class="meta">01 · Web security</p><h3>Understanding SQL Injection</h3><p>A practical exploration of identifying and manually validating SQL injection behavior, including baseline requests, parameter analysis, true/false conditions, error behavior, and confirmation methodology.</p><a class="card-link" href="writeups.html">Read the research notes <span aria-hidden="true">→</span></a></article><article class="card"><p class="meta">02 · Security lab / machine</p><h3>TaskForge</h3><p>A custom vulnerable Linux machine designed to explore a realistic web-to-root attack path involving web enumeration, local privilege escalation, and a custom root-owned SUID component.</p><a class="card-link" href="projects.html">Explore the lab <span aria-hidden="true">→</span></a></article><article class="card"><p class="meta">03 · Methodology</p><h3>Manual Web Application Testing</h3><p>A structured approach to understanding application behavior, identifying attack surface, establishing baselines, and manually testing security-sensitive functionality.</p><a class="card-link" href="writeups.html">View methodology notes <span aria-hidden="true">→</span></a></article></div></div></section>
-<section class="section"><div class="container"><p class="eyebrow">Focus areas</p><h2>Where the research goes next.</h2><ul class="focus-list"><li>Web Application Security</li><li>Penetration Testing</li><li>SQL Injection</li><li>Linux</li><li>Privilege Escalation</li><li>Security Research</li><li>Manual Testing</li><li>CTF / Security Labs</li></ul></div></section>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container reveal">
+
+      <p class="eyebrow">Security researcher</p>
+
+      <h1>
+        I practice cybersecurity through
+        hands-on work.
+      </h1>
+
+      <p class="hero-copy">
+        Web security, penetration testing, Linux, security labs,
+        and technical writeups.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button" href="writeups.html">View writeups</a>
+        <a class="button button--secondary" href="projects.html">Explore projects</a>
+      </div>
+
+      <p class="terminal">~/research &gt; always practicing_</p>
+
+    </div>
+  </section>
+
+
+  <!-- INTRO -->
+  <section class="section">
+    <div class="container split">
+
+      <div>
+        <p class="eyebrow">Current work</p>
+        <h2>Practical cybersecurity work.</h2>
+      </div>
+
+      <div class="prose">
+        <p>
+          I use vulnerable labs, machines, and applications to practice
+          security testing and improve my understanding of real-world
+          attack paths.
+        </p>
+
+        <p>
+          This site documents the work through technical writeups,
+          security research, experiments, and projects.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FEATURED WORK -->
+  <section class="section section--surface">
+    <div class="container">
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Selected work</p>
+          <h2>Featured work</h2>
+        </div>
+
+        <p>
+          Practical security testing, vulnerable environments,
+          and technical notes.
+        </p>
+      </div>
+
+      <div class="grid card-grid">
+
+        <article class="card">
+          <p class="meta">01 · Web security</p>
+
+          <h3>Understanding SQL Injection</h3>
+
+          <p>
+            A practical exploration of identifying and manually
+            validating SQL injection behavior, including baseline
+            requests, parameter analysis, true/false conditions,
+            error behavior, and confirmation methodology.
+          </p>
+
+          <a class="card-link" href="writeups.html">
+            Read the research notes
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+
+
+        <article class="card">
+          <p class="meta">02 · Security lab / machine</p>
+
+          <h3>TaskForge</h3>
+
+          <p>
+            A custom vulnerable Linux machine designed to explore
+            a realistic web-to-root attack path involving web
+            enumeration, local privilege escalation, and a custom
+            root-owned SUID component.
+          </p>
+
+          <a class="card-link" href="projects.html">
+            Explore the lab
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+
+
+        <article class="card">
+          <p class="meta">03 · Methodology</p>
+
+          <h3>Manual Web Application Testing</h3>
+
+          <p>
+            A structured approach to understanding application
+            behavior, identifying attack surface, establishing
+            baselines, and manually testing security-sensitive
+            functionality.
+          </p>
+
+          <a class="card-link" href="writeups.html">
+            View methodology notes
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- HACK THE BOX -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Hack The Box</p>
+          <h2>PJPlays</h2>
+        </div>
+
+        <p>
+          A record of hands-on machine practice on Hack The Box,
+          with technical writeups documenting completed work.
+        </p>
+      </div>
+
+
+      <article class="card">
+
+        <p class="meta">HTB · Skilled · Level 33</p>
+
+        <h3>PJPlays <span aria-hidden="true">#IN</span></h3>
+
+        <p>
+          Hack The Box rank <strong>#6497</strong> ·
+          <strong>110</strong> points ·
+          <strong>20</strong> machines completed
+        </p>
+
+        <ul class="tags">
+          <li>Level 33</li>
+          <li>Skilled</li>
+          <li>20 Machines</li>
+          <li>India</li>
+        </ul>
+
+        <div class="hero-actions">
+          <a
+            class="button"
+            href="https://app.hackthebox.com/public/users/1910661"
+            target="_blank"
+            rel="noopener noreferrer">
+            View HTB Profile
+          </a>
+        </div>
+
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- FOCUS AREAS -->
+  <section class="section section--surface">
+    <div class="container">
+
+      <p class="eyebrow">Focus areas</p>
+
+      <h2>What I currently practice.</h2>
+
+      <ul class="focus-list">
+        <li>Web Application Security</li>
+        <li>Penetration Testing</li>
+        <li>SQL Injection</li>
+        <li>Linux</li>
+        <li>Privilege Escalation</li>
+        <li>Security Research</li>
+        <li>Manual Testing</li>
+        <li>CTF / Security Labs</li>
+      </ul>
+
+    </div>
+  </section>
+
 </main>
-<footer class="site-footer"><div class="container footer-inner"><span>© 2026 PJunix · Built for learning, research, and curiosity.</span><nav class="footer-nav" aria-label="Footer navigation"><a href="about.html">About</a><a href="writeups.html">Writeups</a><a href="projects.html">Projects</a><a href="contact.html">Contact</a></nav></div></footer>
-</body></html>
+
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+
+    <span>
+      © 2026 PJunix · Built for learning, research, and curiosity.
+    </span>
+
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="about.html">About</a>
+      <a href="writeups.html">Writeups</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+  </div>
+</footer>
+
+</body>
+</html>
