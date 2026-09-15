@@ -1,4 +1,831 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Writeups — PJunix</title><meta name="description" content="In-progress security research notes on web testing, SQL injection, and Linux enumeration."><meta property="og:title" content="Writeups — PJunix"><meta property="og:type" content="website"><link rel="stylesheet" href="assets/css/style.css"><script src="assets/js/main.js" defer></script></head><body>
-<a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="container header-inner"><a class="brand" href="index.html">PJunix</a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">Menu</button><nav class="site-nav" id="primary-navigation" aria-label="Primary navigation"><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="writeups.html" aria-current="page">Writeups</a></li><li><a href="projects.html">Projects</a></li><li><a href="contact.html">Contact</a></li></ul></nav></div></header>
-<main id="main"><section class="page-hero"><div class="container reveal"><p class="eyebrow">Research notebook</p><h1>Writeups in progress.</h1><p class="hero-copy">Structured notes on controlled experiments, testing methodology, and the questions worth returning to. These entries are deliberately transparent about their current stage.</p></div></section><section class="section"><div class="container"><div class="note">Articles will be added as research is ready to share. The index is structured to grow without implying unfinished work is complete.</div><div class="writeup-list" style="margin-top: 1rem;"><article class="writeup"><p class="meta">Web security</p><div><h2>SQL Injection — Understanding the Basics</h2><p>Foundational notes for recognizing and manually validating SQL injection behavior in safe, authorized environments.</p><ul class="tags"><li>SQLi</li><li>Manual Testing</li><li>Burp Suite</li><li>Request/Response Analysis</li></ul></div><span class="status">In Progress / Learning</span></article><article class="writeup"><p class="meta">Web security</p><div><h2>Manual Web Application Testing</h2><p>A disciplined approach to recon, attack-surface mapping, baselines, and testing security-sensitive application behavior.</p><ul class="tags"><li>Recon</li><li>Attack Surface</li><li>Baselines</li><li>Authentication</li><li>Authorization</li><li>Input Validation</li></ul></div><span class="status">In Progress</span></article><article class="writeup"><p class="meta">Linux security</p><div><h2>Linux Enumeration for Privilege Escalation</h2><p>Planned notes on collecting and interpreting system details before making escalation assumptions.</p><ul class="tags"><li>Enumeration</li><li>Processes</li><li>Services</li><li>File Permissions</li><li>SUID</li><li>Privilege Escalation</li></ul></div><span class="status">Planned</span></article></div></div></section></main>
-<footer class="site-footer"><div class="container footer-inner"><span>© 2026 PJunix · Built for learning, research, and curiosity.</span><nav class="footer-nav" aria-label="Footer navigation"><a href="about.html">About</a><a href="writeups.html">Writeups</a><a href="projects.html">Projects</a><a href="contact.html">Contact</a></nav></div></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Writeups — PJunix</title>
+  <meta
+    name="description"
+    content="Technical writeups and Hack The Box machine notes by PJunix."
+  >
+
+  <meta property="og:title" content="Writeups — PJunix">
+  <meta
+    property="og:description"
+    content="Technical writeups covering web security, Linux, penetration testing, and Hack The Box machines."
+  >
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+
+    <a class="brand" href="index.html">PJunix</a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-navigation">
+      Menu
+    </button>
+
+    <nav
+      class="site-nav"
+      id="primary-navigation"
+      aria-label="Primary navigation">
+
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li>
+          <a href="writeups.html" aria-current="page">Writeups</a>
+        </li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+    </nav>
+
+  </div>
+</header>
+
+
+<main id="main">
+
+  <!-- PAGE INTRO -->
+  <section class="page-hero">
+    <div class="container reveal">
+
+      <p class="eyebrow">Technical writeups</p>
+
+      <h1>Security notes &amp; HTB machines.</h1>
+
+      <p class="hero-copy">
+        Practical notes from web security testing, Linux security labs,
+        and machines completed on Hack The Box.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- RESEARCH NOTES -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Research notes</p>
+          <h2>Web &amp; security testing</h2>
+        </div>
+
+        <p>
+          Notes covering techniques and testing approaches I am
+          currently practicing.
+        </p>
+      </div>
+
+
+      <div class="writeup-list">
+
+        <article class="writeup">
+
+          <p class="meta">Web security</p>
+
+          <div>
+            <h2>SQL Injection — Understanding the Basics</h2>
+
+            <p>
+              Foundational notes for recognizing and manually validating
+              SQL injection behavior in safe, authorized environments.
+            </p>
+
+            <ul class="tags">
+              <li>SQLi</li>
+              <li>Manual Testing</li>
+              <li>Burp Suite</li>
+              <li>Request/Response Analysis</li>
+            </ul>
+          </div>
+
+          <span class="status">Learning</span>
+
+        </article>
+
+
+        <article class="writeup">
+
+          <p class="meta">Web security</p>
+
+          <div>
+            <h2>Manual Web Application Testing</h2>
+
+            <p>
+              A practical approach to recon, attack-surface mapping,
+              baselines, and testing security-sensitive application
+              behavior.
+            </p>
+
+            <ul class="tags">
+              <li>Recon</li>
+              <li>Attack Surface</li>
+              <li>Baselines</li>
+              <li>Authentication</li>
+              <li>Authorization</li>
+              <li>Input Validation</li>
+            </ul>
+          </div>
+
+          <span class="status">Learning</span>
+
+        </article>
+
+
+        <article class="writeup">
+
+          <p class="meta">Linux security</p>
+
+          <div>
+            <h2>Linux Enumeration for Privilege Escalation</h2>
+
+            <p>
+              Notes on collecting and interpreting system information
+              during Linux privilege-escalation practice.
+            </p>
+
+            <ul class="tags">
+              <li>Enumeration</li>
+              <li>Processes</li>
+              <li>Services</li>
+              <li>File Permissions</li>
+              <li>SUID</li>
+              <li>Privilege Escalation</li>
+            </ul>
+          </div>
+
+          <span class="status">Learning</span>
+
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- HTB MACHINES -->
+  <section class="section section--surface">
+    <div class="container">
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Hack The Box</p>
+          <h2>Machines</h2>
+        </div>
+
+        <p>
+          Machines completed on Hack The Box. Each entry links directly
+          to the corresponding HTB machine.
+        </p>
+      </div>
+
+
+      <div class="grid card-grid">
+
+
+        <!-- CAP -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9e4d90d2-73c7-4da0-a15f-662bbc048868.png"
+              alt="Cap machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Cap</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Cap"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- COHORT -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/a1fb351c-6269-49cd-8789-fc579a687c97-1781002999.png"
+              alt="Cohort machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Cohort</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Cohort"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- CONNECTED -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/a1e14c0a-2ce3-44f2-a101-f0415bb1e577-1779890154.png"
+              alt="Connected machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Connected</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Connected"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- DEVHUB -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/a1e13a3f-a4e4-4757-94e4-32b2e0d693c0-1779887169.png"
+              alt="DevHub machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Medium · Linux</p>
+
+          <h3>DevHub</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/DevHub"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- REACTOR -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/a1c58c3b-0931-413d-9394-5fae4350ec4c-1778698333.png"
+              alt="Reactor machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Reactor</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Reactor"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- TWOMILLION -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9e4d90cd-c843-47e4-97f7-c0a2d69b78ce.png"
+              alt="TwoMillion machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>TwoMillion</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/TwoMillion"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- FACTS -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/a0efb09d-2937-4e7c-bd04-ba2e4386b8b1.png"
+              alt="Facts machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Facts</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Facts"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- BROWSED -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/a0c75262-73b6-45ba-b27f-5d9f048dc5dd.png"
+              alt="Browsed machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Medium · Linux</p>
+
+          <h3>Browsed</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Browsed"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- GAVEL -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/a065ba38-a36c-4635-a59d-b47742378409.png"
+              alt="Gavel machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Medium · Linux</p>
+
+          <h3>Gavel</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Gavel"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- CONVERSOR -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/a02c6f24-5b8e-4e41-919e-40464d7c1a18.png"
+              alt="Conversor machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Conversor</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Conversor"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- IMAGERY -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9ff4b8af-7914-462e-9b52-c5874d1a675a.png"
+              alt="Imagery machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Medium · Linux</p>
+
+          <h3>Imagery</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Imagery"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- EXPRESSWAY -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9fe456df-b95f-4a33-9a4c-9cdeecc6c08d.png"
+              alt="Expressway machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Expressway</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Expressway"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- SOULMATE -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9fc816a0-cb01-44bf-a506-fb86f93bf8bd.png"
+              alt="Soulmate machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Soulmate</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Soulmate"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- CODEPARTTWO -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9f7fc279-ccc7-4d3a-a99b-02aeab299881.png"
+              alt="CodePartTwo machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>CodePartTwo</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/CodePartTwo"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- EDITOR -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9f5d66d4-6fd5-4de0-808b-fd1568184c8e.png"
+              alt="Editor machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Editor</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Editor"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- ERA -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9f5d65f2-ce76-4699-b5d0-9175d7363f6c.png"
+              alt="Era machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Medium · Linux</p>
+
+          <h3>Era</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Era"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- OUTBOUND -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9f3b3364-199d-486b-8c7a-a4c473c5b730.png"
+              alt="Outbound machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Outbound</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Outbound"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- ARTIFICIAL -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9f2d4814-df9d-4360-a10d-252532a053a7.png"
+              alt="Artificial machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Artificial</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Artificial"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- PLANNING -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9ebe5c8d-6e00-4302-98b4-163d67362571.png"
+              alt="Planning machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Easy · Linux</p>
+
+          <h3>Planning</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Planning"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+        <!-- STRUTTED -->
+        <article class="card machine-card">
+
+          <div class="machine-logo">
+            <img
+              src="https://cdn.services-k8s.prod.aws.htb.systems/content/machines/avatar/9e4d90cc-30fb-4247-9e35-73e0d55dbf95.png"
+              alt="Strutted machine logo"
+              loading="lazy">
+          </div>
+
+          <p class="meta">Medium · Linux</p>
+
+          <h3>Strutted</h3>
+
+          <p>
+            Hack The Box machine.
+          </p>
+
+          <a
+            class="card-link"
+            href="https://app.hackthebox.com/machines/Strutted"
+            target="_blank"
+            rel="noopener noreferrer">
+            View on HTB
+            <span aria-hidden="true">↗</span>
+          </a>
+
+        </article>
+
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+
+    <span>
+      © 2026 PJunix · Built for learning, research, and curiosity.
+    </span>
+
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="about.html">About</a>
+      <a href="writeups.html">Writeups</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+  </div>
+</footer>
+
+</body>
+</html>
