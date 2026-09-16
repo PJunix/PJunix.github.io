@@ -1,5 +1,3 @@
-<main id="main" class="taskforge-page">
-
 const toggle = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.site-nav');
 
