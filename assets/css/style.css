@@ -638,3 +638,27 @@ h3 {
     width: 100%;
   }
 }
+
+/* Copy buttons for code blocks */
+
+pre {
+  position: relative;
+}
+
+.code-copy {
+  position: absolute;
+  top: .65rem;
+  right: .65rem;
+  padding: .35rem .6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  color: var(--muted);
+  font: 700 .72rem var(--mono);
+  cursor: pointer;
+}
+
+.code-copy:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
