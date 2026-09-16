@@ -265,3 +265,39 @@ function renderMachineCards() {
 }
 
 renderMachineCards();
+/*
+ * Copy buttons for code blocks
+ */
+
+document.querySelectorAll('pre').forEach((pre) => {
+  const code = pre.querySelector('code');
+
+  if (!code) {
+    return;
+  }
+
+  const button = document.createElement('button');
+
+  button.className = 'code-copy';
+  button.type = 'button';
+  button.textContent = 'Copy';
+
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(code.innerText);
+      button.textContent = 'Copied';
+
+      setTimeout(() => {
+        button.textContent = 'Copy';
+      }, 1500);
+    } catch {
+      button.textContent = 'Failed';
+
+      setTimeout(() => {
+        button.textContent = 'Copy';
+      }, 1500);
+    }
+  });
+
+  pre.appendChild(button);
+});
