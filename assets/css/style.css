@@ -662,3 +662,8 @@ pre {
   color: var(--text);
   border-color: var(--accent);
 }
+/* Right-align TaskForge section headings */
+
+.taskforge-page .section-heading h2 {
+  text-align: right;
+}
