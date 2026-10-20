@@ -668,3 +668,25 @@ pre {
 .taskforge-page .section-heading h2 {
   text-align: right;
 }
+
+/* HTB profile statistics */
+.htb-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+.htb-stat h3 {
+  margin: .25rem 0 0;
+}
+.htb-updated {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--muted);
+  font-size: .8rem;
+}
+@media (max-width: 760px) {
+  .htb-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
