@@ -9,7 +9,6 @@ the last known-good JSON files.
 from __future__ import annotations
 
 import json
-import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -110,7 +109,7 @@ def get_completed_machines() -> list[dict]:
     if not completed:
         raise RuntimeError("HTB returned no rooted machines; refusing to replace the existing machine list.")
 
-    # Keep the newest machine releases first; retain deterministic ordering.
+    # Keep a deterministic order so daily syncs don't create noisy diffs.
     completed.sort(key=lambda item: (item["name"].lower(), item["machineId"]))
     return completed
 
