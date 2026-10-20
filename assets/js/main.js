@@ -209,14 +209,11 @@ const machines = [
   }
 ];
 
-function renderMachineCards() {
+function renderMachineCards(machineList = machines) {
   const grid = document.querySelector('#machine-grid');
+  if (!grid) return;
 
-  if (!grid) {
-    return;
-  }
-
-  grid.innerHTML = machines.map((machine) => {
+  grid.innerHTML = machineList.map((machine) => {
     const walkthroughLink = machine.walkthrough
       ? `<a class="button" href="${machine.walkthrough}">Read Walkthrough</a>`
       : '';
@@ -224,47 +221,69 @@ function renderMachineCards() {
     return `
       <article class="card machine-card">
         <div class="machine-logo">
-          <img
-            src="${machine.logo}"
-            alt="${machine.name} machine logo"
-            loading="lazy"
-            decoding="async"
-          >
+          <img src="${machine.logo}" alt="${machine.name} machine logo" loading="lazy" decoding="async">
         </div>
-
         <p class="meta">${machine.difficulty} · ${machine.os}</p>
-
         <h3>${machine.name}</h3>
-
         <p class="machine-status">✓ Pwned</p>
-
         <div class="machine-actions">
           ${walkthroughLink}
-
-          <a
-            class="button button--secondary"
-            href="${machine.achievement}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            HTB Achievement ↗
-          </a>
-
-          <a
-            class="button"
-            href="${machine.htb}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            HTB Machine ↗
-          </a>
+          <a class="button button--secondary" href="${machine.achievement}" target="_blank" rel="noopener noreferrer">HTB Achievement ↗</a>
+          <a class="button" href="${machine.htb}" target="_blank" rel="noopener noreferrer">HTB Machine ↗</a>
         </div>
       </article>
     `;
   }).join('');
 }
 
-renderMachineCards();
+async function loadHtbMachineData() {
+  try {
+    const response = await fetch('/data/htb-machines.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Machine data unavailable');
+    const payload = await response.json();
+
+    if (Array.isArray(payload.machines) && payload.machines.length > 0) {
+      renderMachineCards(payload.machines);
+      return;
+    }
+  } catch (error) {
+    console.warn('Using the built-in HTB machine list:', error);
+  }
+
+  renderMachineCards(machines);
+}
+
+async function loadHtbStats() {
+  const container = document.querySelector('#htb-stats');
+  if (!container) return;
+
+  try {
+    const response = await fetch('/data/htb-stats.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Stats unavailable');
+    const payload = await response.json();
+    const stats = payload.stats;
+    if (!stats || !stats.updatedAt) return;
+
+    const items = [
+      ['Rank', stats.rankLabel || '—'],
+      ['Global position', Number.isFinite(stats.globalRank) ? `#${stats.globalRank.toLocaleString()}` : '—'],
+      ['Points', Number.isFinite(stats.points) ? stats.points.toLocaleString() : '—'],
+      ['Machines rooted', Number.isFinite(stats.machinesRooted) ? stats.machinesRooted.toLocaleString() : '—']
+    ];
+
+    container.innerHTML = items.map(([label, value]) => `
+      <div class="card htb-stat">
+        <p class="meta">${label}</p>
+        <h3>${value}</h3>
+      </div>
+    `).join('') + `<p class="htb-updated">Last synced: ${new Date(stats.updatedAt).toLocaleDateString()}</p>`;
+  } catch (error) {
+    console.warn('HTB stats are not available yet:', error);
+  }
+}
+
+loadHtbMachineData();
+loadHtbStats();
 /*
  * Copy buttons for code blocks
  */
